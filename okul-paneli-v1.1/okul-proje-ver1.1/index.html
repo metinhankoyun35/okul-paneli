@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arayüz Prototipi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Yan Menü -->
+    <div class="sidebar">
+        <h2>Panel Menüsü</h2>
+        <nav>
+            <button onclick="showSection('giris')" class="active">Giriş Ekranı</button>
+            <button onclick="showSection('anasayfa')">Ana Sayfa</button>
+            <button onclick="showSection('admin')">Admin Paneli</button>
+            <button onclick="showSection('yarismalar')">Yarışmalar</button>
+            <button onclick="showSection('takimlar')">Takımlar</button>
+            <button onclick="showSection('eslesmeler')">Eşleşmeler</button>
+            <button onclick="showSection('puan')">Puan Durumu</button>
+            <button onclick="showSection('sonuclar')">Sonuçlar</button>
+        </nav>
+    </div>
+
+    <!-- İçerik Alanı -->
+    <div class="content">
+        <div id="giris" class="section active">
+            <h1>Giriş Ekranı</h1>
+            <p>Kullanıcı giriş formu ve kimlik doğrulama alanı burada yer alacak.</p>
+        </div>
+
+        <div id="anasayfa" class="section">
+            <h1>Ana Sayfa</h1>
+            <p>Sistem genel özet bilgileri ve duyuruların yer aldığı ana ekran.</p>
+        </div>
+
+        <div id="admin" class="section">
+            <h1>Admin Paneli</h1>
+            <p>Yönetici ayarları, kullanıcı yönetimi ve sistem yapılandırması.</p>
+        </div>
+
+        <div id="yarismalar" class="section">
+            <h1>Yarışmalar</h1>
+            <p>Aktif ve yaklaşan yarışmaların listesi ve detayları.</p>
+        </div>
+
+        <div id="takimlar" class="section">
+            <h1>Takımlar</h1>
+            <p>Yarışmaya katılan takımlar ve üye bilgileri.</p>
+        </div>
+
+        <div id="eslesmeler" class="section">
+            <h1>Eşleşmeler</h1>
+            <p>Takımlar arası eşleşme kuraları ve fikstür bilgisi.</p>
+        </div>
+
+        <div id="puan" class="section">
+            <h1>Puan Durumu</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sıra</th>
+                        <th>Takım</th>
+                        <th>Puan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Takım A</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Takım B</td>
+                        <td>12</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="sonuclar" class="section">
+            <h1>Sonuçlar</h1>
+            <p>Tamamlanan yarışma ve maç sonuçları ekranı.</p>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.sidebar nav button').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
