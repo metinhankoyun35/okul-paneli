@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okul Yarışma & Yönetim Paneli</title>
+    <!-- Google Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome İkon Kütüphanesi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Ayrı CSS Dosyası -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Arka Plan Işıltıları -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <!-- Yan Menü (Sidebar) -->
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h2>Okul Portal Paneli</h2>
+        </div>
+        
+        <!-- Giriş Yapılmadan Önce Gizlenen Navigasyon -->
+        <nav id="main-nav" class="hidden-nav">
+            <button onclick="showSection('anasayfa')" id="btn-anasayfa" class="active">
+                <i class="fa-solid fa-house"></i> Ana Sayfa
+            </button>
+            <button onclick="showSection('admin')" id="btn-admin">
+                <i class="fa-solid fa-user-shield"></i> Yönetim Paneli
+            </button>
+            <button onclick="showSection('yarismalar')" id="btn-yarismalar">
+                <i class="fa-solid fa-trophy"></i> Yarışmalar
+            </button>
+            <button onclick="showSection('takimlar')" id="btn-takimlar">
+                <i class="fa-solid fa-users-gear"></i> Takım & Öğrenci Yönetimi
+            </button>
+            <button onclick="showSection('eslesmeler')" id="btn-eslesmeler">
+                <i class="fa-solid fa-diagram-project"></i> Eşleşmeler
+            </button>
+            <button onclick="showSection('puan')" id="btn-puan">
+                <i class="fa-solid fa-chart-simple"></i> Puan Durumu
+            </button>
+            <button onclick="showSection('sonuclar')" id="btn-sonuclar">
+                <i class="fa-solid fa-square-poll-vertical"></i> Sonuçlar
+            </button>
+        </nav>
+        
+        <!-- Giriş Yapılınca Görünecek Profil Kartı -->
+        <div class="user-profile hidden-nav" id="user-profile">
+            <div class="avatar"><i class="fa-solid fa-user-gear"></i></div>
+            <div class="user-info">
+                <span class="name" id="display-teacher-name">Admin</span>
+                <span class="role" id="display-teacher-dept">Sistem Yöneticisi</span>
+            </div>
+            <button class="btn-logout" onclick="logout()" title="Çıkış Yap">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="content">
+        
+        <!-- 1. ZORUNLU YÖNETİCİ GİRİŞ EKRANI -->
+        <div id="giris" class="section active">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="auth-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h2>Yönetici Girişi</h2>
+                    <p class="auth-desc">Sisteme erişmek için lütfen yönetici hesabınızla giriş yapın.</p>
+                </div>
+
+                <form id="login-form" onsubmit="handleLogin(event)" class="auth-form">
+                    <div class="input-group">
+                        <label><i class="fa-solid fa-id-card"></i> Kullanıcı Adı</label>
+                        <input type="text" id="username" placeholder="Örn: admin" required autocomplete="off">
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fa-solid fa-key"></i> Şifre</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="#" class="forgot-pass" onclick="alert('Lütfen sistem yöneticisi ile iletişime geçin.')">Şifremi Unuttum</a>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        Sisteme Giriş Yap <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </button>
+                </form>
+
+                <div class="auth-notice">
+                    <i class="fa-solid fa-circle-info"></i> Giriş Bilgileri: <strong>admin</strong> / <strong>admin123</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. ANA SAYFA -->
+        <div id="anasayfa" class="section">
+            <div class="section-header">
+                <h1>Ana Sayfa</h1>
+                <p>Okul içi yarışma duyuruları ve aktif etkinlik özetleri.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="stat-info">
+                        <h3>6</h3>
+                        <p>Aktif Yarışma</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-people-group"></i></div>
+                    <div class="stat-info">
+                        <h3 id="stat-team-count">4</h3>
+                        <p>Kayıtlı Takım</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <div class="stat-info">
+                        <h3>124</h3>
+                        <p>Katılımcı Öğrenci</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-grid" style="margin-top: 24px;">
+                <div class="card-form">
+                    <h3><i class="fa-solid fa-bullhorn"></i> Yaklaşan Etkinlikler & Duyurular</h3>
+                    <ul class="announcement-list">
+                        <li>
+                            <span class="badge badge-green">Futbol</span>
+                            <div>
+                                <strong>Futbol Turnuvası Kura Çekimi</strong>
+                                <p>Cuma günü saat 15:30'da Beden Eğitimi salonunda yapılacaktır.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="badge badge-blue">Basketbol</span>
+                            <div>
+                                <strong>3x3 Basketbol Kayıtları Sonlanıyor</strong>
+                                <p>Takım listelerini yönetim panelinden kaydetmeyi unutmayınız.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="badge badge-orange">Satranç</span>
+                            <div>
+                                <strong>Akıl Oyunları Başvuruları</strong>
+                                <p>İsviçre sistemi eşleşmeleri haftaya panoda ilan edilecektir.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. YÖNETİM PANELİ -->
+        <div id="admin" class="section">
+            <div class="section-header">
+                <h1>Yönetim Paneli</h1>
+                <p>Yönetici yetkileri, genel okul ayarları ve yarışma tanımlamaları.</p>
+            </div>
+
+            <div class="grid-container">
+                <div class="card-form">
+                    <h3><i class="fa-solid fa-sliders"></i> Sistem ve Turnuva Ayarları</h3>
+                    <form onsubmit="event.preventDefault(); alert('Ayarlar başarıyla kaydedildi!');">
+                        <div class="input-group" style="margin-bottom: 12px;">
+                            <label>Aktif Eğitim Dönemi</label>
+                            <input type="text" value="2025-2026 Bahar Dönemi">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 12px;">
+                            <label>Sorumlu Yönetici</label>
+                            <input type="text" value="Admin">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 16px;">
+                            <label>Takım Kayıt Durumu</label>
+                            <select class="custom-select">
+                                <option>Kayıtlar Açık (Veri Girişi Serbest)</option>
+                                <option>Kayıtlar Kapalı</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Ayarları Kaydet</button>
+                    </form>
+                </div>
+
+                <div class="card-form">
+                    <h3><i class="fa-solid fa-user-check"></i> Yetkili Kullanıcı Listesi</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kullanıcı</th>
+                                <th>Rol / Bölüm</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Admin</td>
+                                <td>Sistem Yöneticisi</td>
+                                <td><span class="badge badge-green">Aktif</span></td>
+                            </tr>
+                            <tr>
+                                <td>Öğretmen</td>
+                                <td>Beden Eğitimi</td>
+                                <td><span class="badge badge-green">Aktif</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. YARIŞMALAR -->
+        <div id="yarismalar" class="section">
+            <div class="section-header">
+                <h1>Yarışmalar</h1>
+                <p>Okul bünyesinde düzenlenen aktif yarışmaların listesi.</p>
+            </div>
+
+            <div class="tournaments-grid">
+                <div class="tournament-card">
+                    <div class="t-icon"><i class="fa-solid fa-futbol"></i></div>
+                    <h3>Futbol Turnuvası</h3>
+                    <p>Sınıflar arası halı saha turnuvası</p>
+                    <div class="t-meta">
+                        <span><i class="fa-solid fa-users"></i> 11'er Kişi</span>
+                        <span class="badge badge-green">Kayıt Açık</span>
+                    </div>
+                </div>
+
+                <div class="tournament-card">
+                    <div class="t-icon"><i class="fa-solid fa-basketball"></i></div>
+                    <h3>Basketbol Turnuvası</h3>
+                    <p>3x3 Yarı saha basketbol serisi</p>
+                    <div class="t-meta">
+                        <span><i class="fa-solid fa-users"></i> 3-5 Kişi</span>
+                        <span class="badge badge-green">Kayıt Açık</span>
+                    </div>
+                </div>
+
+                <div class="tournament-card">
+                    <div class="t-icon"><i class="fa-solid fa-volleyball"></i></div>
+                    <h3>Voleybol Turnuvası</h3>
+                    <p>Okul salonunda set bazlı turnuva</p>
+                    <div class="t-meta">
+                        <span><i class="fa-solid fa-users"></i> 6-8 Kişi</span>
+                        <span class="badge badge-blue">Devam Ediyor</span>
+                    </div>
+                </div>
+
+                <div class="tournament-card">
+                    <div class="t-icon"><i class="fa-solid fa-handshake"></i></div>
+                    <h3>İp Çekme Yarışması</h3>
+                    <p>Bölümler arası güç yarışması</p>
+                    <div class="t-meta">
+                        <span><i class="fa-solid fa-users"></i> 5 Kişi</span>
+                        <span class="badge badge-green">Kayıt Açık</span>
+                    </div>
+                </div>
+
+                <div class="tournament-card">
+                    <div class="t-icon"><i class="fa-solid fa-table-tennis-paddle-ball"></i></div>
+                    <h3>Masa Tenisi</h3>
+                    <p>Bireysel nakavt şampiyonası</p>
+                    <div class="t-meta">
+                        <span><i class="fa-solid fa-user"></i> 1v1 Tekler</span>
+                        <span class="badge badge-green">Kayıt Açık</span>
+                    </div>
+                </div>
+
+                <div class="tournament-card">
+                    <div class="t-icon"><i class="fa-solid fa-chess"></i></div>
+                    <h3>Satranç & Akıl Oyunları</h3>
+                    <p>İsviçre sistemi puanlı turnuva</p>
+                    <div class="t-meta">
+                        <span><i class="fa-solid fa-user"></i> Bireysel</span>
+                        <span class="badge badge-orange">Hazırlıkta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. ÖĞRENCİ VE TAKIM EKLEME PANELİ -->
+        <div id="takimlar" class="section">
+            <div class="section-header">
+                <h1>Takım & Öğrenci Yönetimi</h1>
+                <p>Sorumlu olduğunuz alana göre takımları ve öğrencileri sisteme ekleyebilirsiniz.</p>
+            </div>
+
+            <div class="grid-container">
+                <div class="card-form">
+                    <h3><i class="fa-solid fa-user-plus"></i> Yeni Öğrenci / Takım Ekle</h3>
+                    <form id="team-form" onsubmit="addTeam(event)">
+                        <div class="input-group">
+                            <label>Takım Adı</label>
+                            <input type="text" id="input-takim" placeholder="Örn: Metal Teknoloji" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Sınıf / Şube</label>
+                            <input type="text" id="input-sinif" placeholder="Örn: 12-A" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Öğrenci Adı Soyadı</label>
+                            <input type="text" id="input-ogrenci" placeholder="Öğrenci adı giriniz" required>
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fa-solid fa-plus"></i> Kaydet</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <h3><i class="fa-solid fa-list-check"></i> Kayıtlı Takımlar</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Takım Adı</th>
+                                <th>Sınıf</th>
+                                <th>Öğrenci</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="team-table-body">
+                            <tr>
+                                <td>101</td>
+                                <td>Metal Teknoloji</td>
+                                <td>12-A</td>
+                                <td>Halil İbrahim</td>
+                                <td><button class="btn-sm-danger" onclick="deleteRow(this)"><i class="fa-solid fa-trash"></i> Sil</button></td>
+                            </tr>
+                            <tr>
+                                <td>102</td>
+                                <td>Motor Alanı</td>
+                                <td>12-K</td>
+                                <td>Ali Yılmaz</td>
+                                <td><button class="btn-sm-danger" onclick="deleteRow(this)"><i class="fa-solid fa-trash"></i> Sil</button></td>
+                            </tr>
+                            <tr>
+                                <td>103</td>
+                                <td>Bilişim Teknolojileri</td>
+                                <td>12-L</td>
+                                <td>Mehmet Demir</td>
+                                <td><button class="btn-sm-danger" onclick="deleteRow(this)"><i class="fa-solid fa-trash"></i> Sil</button></td>
+                            </tr>
+                            <tr>
+                                <td>104</td>
+                                <td>Elektrik Alanı</td>
+                                <td>10-E</td>
+                                <td>Caner Kaya</td>
+                                <td><button class="btn-sm-danger" onclick="deleteRow(this)"><i class="fa-solid fa-trash"></i> Sil</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. EŞLEŞMELER (ANIMASYONLU KURA) -->
+        <div id="eslesmeler" class="section">
+            <div class="section-header">
+                <h1>Eşleşmeler & Maç Takvimi</h1>
+                <p>Takımlar arası turnuva kuraları ve maç fikstürü.</p>
+            </div>
+
+            <div class="card-form" style="margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h3><i class="fa-solid fa-shuffle"></i> Otomatik Kura Çekimi</h3>
+                    <p style="font-size: 12px; color: var(--text-muted);">Sistemde kayıtlı takımları canlı kura animasyonuyla eşleştirir.</p>
+                </div>
+                <button class="btn-primary" id="btn-draw" style="width: auto; padding: 10px 20px;" onclick="drawMatchesAnimated()">
+                    <i class="fa-solid fa-play"></i> Kurayı Çek
+                </button>
+            </div>
+
+            <!-- Animasyonlu Kura Çekim Alanı -->
+            <div class="matches-list" id="matches-container">
+                <p style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px;">Henüz kura çekilmedi. Takım ekledikten sonra yukarıdaki butonla kura çekebilirsiniz.</p>
+            </div>
+        </div>
+
+        <!-- 7. PUAN DURUMU -->
+        <div id="puan" class="section">
+            <div class="section-header">
+                <h1>Puan Durumu</h1>
+                <p>Okul yarışması genel sıralama tablosu.</p>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sıra</th>
+                            <th>Takım Adı</th>
+                            <th>Sınıf</th>
+                            <th>O</th>
+                            <th>G</th>
+                            <th>B</th>
+                            <th>M</th>
+                            <th>Puan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="rank rank-1">1</span></td>
+                            <td>Metal Teknoloji</td>
+                            <td>12-A</td>
+                            <td>8</td>
+                            <td>8</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><strong>24</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank rank-2">2</span></td>
+                            <td>Elektrik Alanı</td>
+                            <td>10-E</td>
+                            <td>8</td>
+                            <td>6</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td><strong>19</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank rank-3">3</span></td>
+                            <td>Bilişim Teknolojileri</td>
+                            <td>12-L</td>
+                            <td>8</td>
+                            <td>5</td>
+                            <td>0</td>
+                            <td>3</td>
+                            <td><strong>15</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 8. SONUÇLAR -->
+        <div id="sonuclar" class="section">
+            <div class="section-header">
+                <h1>Tamamlanan Sonuçlar</h1>
+                <p>Tamamlanan okul yarışmalarının dereceleri ve şampiyonları.</p>
+            </div>
+
+            <div class="grid-container">
+                <div class="card-form">
+                    <h3><i class="fa-solid fa-crown" style="color: #eab308;"></i> Geçen Dönem Şampiyonları</h3>
+                    <ul class="announcement-list">
+                        <li>
+                            <span class="rank rank-1">1</span>
+                            <div>
+                                <strong>Futbol Şampiyonu: Metal Teknoloji (12-A)</strong>
+                                <p>Final maçını 3-1 kazandı.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="rank rank-1">1</span>
+                            <div>
+                                <strong>Basketbol Şampiyonu: 11-A Devleri</strong>
+                                <p>3x3 Turnuva Birincisi.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-form">
+                    <h3><i class="fa-solid fa-medal"></i> Madalya Dağılımı</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+                        • Altın Madalya: 12 Adet<br>
+                        • Gümüş Madalya: 12 Adet<br>
+                        • Bronz Madalya: 12 Adet<br>
+                        • Okul Kupası: 3 Adet
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JAVASCRIPT KODLARI -->
+    <script>
+        // --- 1. GİRİŞ KONTROLÜ (admin / admin123) ---
+        function handleLogin(event) {
+            if (event) event.preventDefault();
+            
+            const usernameInput = document.getElementById('username').value.trim().toLowerCase();
+            const passwordInput = document.getElementById('password').value.trim();
+            
+            if (usernameInput === "admin" && passwordInput === "admin123") {
+                document.getElementById('main-nav').classList.remove('hidden-nav');
+                document.getElementById('user-profile').classList.remove('hidden-nav');
+                document.getElementById('login-form').reset();
+                showSection('anasayfa');
+            } else {
+                alert("Hatalı kullanıcı adı veya şifre!\n\nKullanıcı Adı: admin\nŞifre: admin123");
+            }
+            return false;
+        }
+
+        // --- 2. SEKMELER ARASI GEÇİŞ ---
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.sidebar nav button').forEach(btn => btn.classList.remove('active'));
+
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            const activeBtn = document.getElementById('btn-' + sectionId);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+        }
+
+        // --- 3. ÇIKIŞ YAPMA ---
+        function logout() {
+            document.getElementById('main-nav').classList.add('hidden-nav');
+            document.getElementById('user-profile').classList.add('hidden-nav');
+            document.getElementById('login-form').reset();
+            
+            showSection('giris');
+        }
+
+        // --- 4. DİNAMİK TAKIM EKLEME VE SİLME ---
+        let takimIdCounter = 105;
+
+        function addTeam(event) {
+            event.preventDefault();
+
+            const takimAdi = document.getElementById('input-takim').value;
+            const sinif = document.getElementById('input-sinif').value;
+            const ogrenci = document.getElementById('input-ogrenci').value;
+
+            const tbody = document.getElementById('team-table-body');
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${takimIdCounter++}</td>
+                <td>${takimAdi}</td>
+                <td>${sinif}</td>
+                <td>${ogrenci}</td>
+                <td><button class="btn-sm-danger" onclick="deleteRow(this)"><i class="fa-solid fa-trash"></i> Sil</button></td>
+            `;
+
+            tbody.appendChild(tr);
+            document.getElementById('team-form').reset();
+            updateTeamStat();
+        }
+
+        function deleteRow(button) {
+            const row = button.parentElement.parentElement;
+            row.remove();
+            updateTeamStat();
+        }
+
+        function updateTeamStat() {
+            const count = document.querySelectorAll('#team-table-body tr').length;
+            const statElem = document.getElementById('stat-team-count');
+            if (statElem) statElem.innerText = count;
+        }
+
+        // --- 5. GELİŞMİŞ ANİMASYONLU KURA ÇEKİMİ ---
+        function drawMatchesAnimated() {
+            const rows = document.querySelectorAll('#team-table-body tr');
+            let teams = [];
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 3) {
+                    const takimAdi = cells[1].innerText.trim();
+                    const sinif = cells[2].innerText.trim();
+                    teams.push(`${takimAdi} (${sinif})`);
+                }
+            });
+
+            if (teams.length < 2) {
+                alert("Kura çekebilmek için 'Takım & Öğrenci Yönetimi' ekranından en az 2 takım eklemelisiniz!");
+                return;
+            }
+
+            const btnDraw = document.getElementById('btn-draw');
+            const container = document.getElementById('matches-container');
+
+            btnDraw.disabled = true;
+            btnDraw.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Kura Karıştırılıyor...`;
+
+            for (let i = teams.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [teams[i], teams[j]] = [teams[j], teams[i]];
+            }
+
+            container.innerHTML = `
+                <div class="draw-loading">
+                    <div class="draw-spinner"></div>
+                    <p>Takımlar Torbadan Çekiliyor...</p>
+                </div>
+            `;
+
+            setTimeout(() => {
+                container.innerHTML = '';
+                let pairList = [];
+                let matchIndex = 1;
+
+                for (let i = 0; i < teams.length; i += 2) {
+                    if (i + 1 < teams.length) {
+                        pairList.push({
+                            index: matchIndex++,
+                            team1: teams[i],
+                            team2: teams[i + 1],
+                            isBay: false
+                        });
+                    } else {
+                        pairList.push({
+                            team1: teams[i],
+                            isBay: true
+                        });
+                    }
+                }
+
+                pairList.forEach((item, delayIndex) => {
+                    setTimeout(() => {
+                        let cardHTML = '';
+                        if (!item.isBay) {
+                            cardHTML = `
+                                <div class="match-card draw-card-anim">
+                                    <span class="match-time">${item.index}. Maç - Saha ${item.index}</span>
+                                    <div class="match-teams">
+                                        <span class="team team-anim">${item.team1}</span>
+                                        <span class="vs vs-glow">VS</span>
+                                        <span class="team team-anim">${item.team2}</span>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            cardHTML = `
+                                <div class="match-card draw-card-anim" style="border-color: rgba(234, 179, 8, 0.4);">
+                                    <span class="match-time" style="color: #eab308;">Eşleşmeyen Takım</span>
+                                    <div class="match-teams">
+                                        <span class="team team-anim">${item.team1}</span>
+                                        <span class="vs" style="color: #eab308;">BAY</span>
+                                        <span class="team" style="color: #9ca3af;">(Doğrudan Üst Tura Yükseldi)</span>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        container.innerHTML += cardHTML;
+
+                        if (delayIndex === pairList.length - 1) {
+                            btnDraw.disabled = false;
+                            btnDraw.innerHTML = `<i class="fa-solid fa-rotate-right"></i> Kurayı Yeniden Çek`;
+                        }
+                    }, delayIndex * 400);
+                });
+
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
