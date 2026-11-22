@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Arayüz Prototipi</title>
+    <!-- Modern Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome İkon Kütüphanesi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Harici CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Arka Plan Işıltıları (Glow Effects) -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <!-- Yan Menü (Sidebar) -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="logo-icon"><i class="fa-solid fa-trophy"></i></div>
+            <h2>Sistem Paneli</h2>
+        </div>
+        
+        <nav>
+            <button onclick="showSection('giris')" class="active">
+                <i class="fa-solid fa-right-to-bracket"></i> Giriş Ekranı
+            </button>
+            <button onclick="showSection('anasayfa')">
+                <i class="fa-solid fa-house"></i> Ana Sayfa
+            </button>
+            <button onclick="showSection('admin')">
+                <i class="fa-solid fa-user-shield"></i> Admin Paneli
+            </button>
+            <button onclick="showSection('yarismalar')">
+                <i class="fa-solid fa-gamepad"></i> Yarışmalar
+            </button>
+            <button onclick="showSection('takimlar')">
+                <i class="fa-solid fa-users"></i> Takımlar
+            </button>
+            <button onclick="showSection('eslesmeler')">
+                <i class="fa-solid fa-diagram-project"></i> Eşleşmeler
+            </button>
+            <button onclick="showSection('puan')">
+                <i class="fa-solid fa-chart-simple"></i> Puan Durumu
+            </button>
+            <button onclick="showSection('sonuclar')">
+                <i class="fa-solid fa-square-poll-vertical"></i> Sonuçlar
+            </button>
+        </nav>
+        
+        <div class="user-profile">
+            <div class="avatar"><i class="fa-solid fa-circle-user"></i></div>
+            <div class="user-info">
+                <span class="name">Kişi 4</span>
+                <span class="role">Figma / Arayüz</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="content">
+        
+        <div id="giris" class="section active">
+            <div class="section-header">
+                <h1>Giriş Ekranı</h1>
+                <p>Kullanıcı giriş formu ve kimlik doğrulama alanı burada yer alacak.</p>
+            </div>
+        </div>
+
+        <div id="anasayfa" class="section">
+            <div class="section-header">
+                <h1>Ana Sayfa</h1>
+                <p>Sistem genel özet bilgileri ve duyuruların yer aldığı ana ekran.</p>
+            </div>
+        </div>
+
+        <div id="admin" class="section">
+            <div class="section-header">
+                <h1>Admin Paneli</h1>
+                <p>Yönetici ayarları, kullanıcı yönetimi ve sistem yapılandırması.</p>
+            </div>
+        </div>
+
+        <div id="yarismalar" class="section">
+            <div class="section-header">
+                <h1>Yarışmalar</h1>
+                <p>Aktif ve yaklaşan yarışmaların listesi ve detayları.</p>
+            </div>
+        </div>
+
+        <div id="takimlar" class="section">
+            <div class="section-header">
+                <h1>Takımlar</h1>
+                <p>Yarışmaya katılan takımlar ve üye bilgileri.</p>
+            </div>
+        </div>
+
+        <div id="eslesmeler" class="section">
+            <div class="section-header">
+                <h1>Eşleşmeler</h1>
+                <p>Takımlar arası eşleşme kuraları ve fikstür bilgisi.</p>
+            </div>
+        </div>
+
+        <div id="puan" class="section">
+            <div class="section-header">
+                <h1>Puan Durumu</h1>
+                <p>Anlık puan sıralaması ve takım istatistikleri.</p>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sıra</th>
+                            <th>Takım</th>
+                            <th>Puan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="rank rank-1">1</span></td>
+                            <td>Takım A</td>
+                            <td><strong>15</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank rank-2">2</span></td>
+                            <td>Takım B</td>
+                            <td><strong>12</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="sonuclar" class="section">
+            <div class="section-header">
+                <h1>Sonuçlar</h1>
+                <p>Tamamlanan yarışma ve maç sonuçları ekranı.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Sekme Geçiş Scripti -->
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.sidebar nav button').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
