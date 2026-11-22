@@ -1,11 +1,8 @@
-## Versiyon 2.0 — Yenilikler ve Yapılan Değişiklikler
+## Versiyon 1.0 — İlk Sürüm
 
-Okul Yarışma ve Etkinlik Yönetim Sistemi (OYYS) projesinde Versiyon 1 üzerine eklenen özellikler ve geliştirmeler:
+Okul Yarışma ve Etkinlik Yönetim Sistemi (OYYS) projesinin ilk çalışan arayüz sürümüdür.
 
-### Eklenen Özellikler
-- Yeni ekran/sekme bileşenleri ve kullanıcı etkileşim alanları eklendi.
-- Sayfa geçişleri ve form/panel düzeni Versiyon 1 iskeleti üzerine genişletildi.
-
-### İyileştirmeler ve Düzenlemeler
-- Arayüz yerleşimi, görsel hizalama ve stil kuralları güncellendi.
-- Mevcut sayfaların kullanım akışı ve düzeni düzenlendi.
+### Eklenenler ve Yapılan Düzenlemeler
+- Koyu tema (Dark Mode) yan menü (`sidebar`) ve temel sayfa geçiş yapısı oluşturuldu.
+- Giriş Ekranı, Ana Sayfa, Admin Paneli, Yarışmalar, Takımlar, Eşleşmeler, Puan Durumu ve Sonuçlar bölümlerinin iskeleti hazırlandı.
+- `index.html` ve `style.css` dosyalarıyla ilk sayfa yerleşimi ve stil düzeni kuruldu.
